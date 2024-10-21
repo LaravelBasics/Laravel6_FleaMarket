@@ -12,6 +12,7 @@ use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Log;
 
 class SellController extends Controller
 {
@@ -64,6 +65,7 @@ class SellController extends Controller
     private function saveImage(UploadedFile $file): string
     {
         $tempPath = $this->makeTempPath();
+        Log::info('Uploaded file:', ['file' => $request->file('item-image')]);
 
         Image::make($file)->fit(300, 300)->save($tempPath);
 
