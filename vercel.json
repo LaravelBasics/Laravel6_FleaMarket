@@ -41,6 +41,14 @@
         {
             "src": "/(.*)",
             "dest": "/public/index.php"
+        },
+        {
+            "src": "/storage/(.*)",
+            "dest": "/storage/$1"
+          },
+        {
+            "src": "/(.*)",
+            "dest": "server.php"
         }
     ],
     "env": {
