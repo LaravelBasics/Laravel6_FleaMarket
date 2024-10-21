@@ -64,17 +64,28 @@
     </div>
 </div>
 <script>
-    var payjp = Payjp('{{config("payjp.public_key")}}')//PAY.JPのクライアントライブラリを初期化,config("payjp.public_key") は、Laravelの設定ファイルからPAY.JPのパブリックキーを取得
+    document.addEventListener('DOMContentLoaded', function() {
+        var payjp = Payjp('{{config("payjp.public_key")}}');
+        var elements = payjp.elements();
+        var numberElement = elements.create('cardNumber');
+        var expiryElement = elements.create('cardExpiry');
+        var cvcElement = elements.create('cardCvc');
 
-    var elements = payjp.elements()//PAY.JP Elements API を使用するための要素オブジェクトを取得
+        numberElement.mount('#number-form');
+        expiryElement.mount('#expiry-form');
+        cvcElement.mount('#cvc-form');
+    });
+    // var payjp = Payjp('{{config("payjp.public_key")}}')//PAY.JPのクライアントライブラリを初期化,config("payjp.public_key") は、Laravelの設定ファイルからPAY.JPのパブリックキーを取得
 
-    var numberElement = elements.create('cardNumber')//create メソッドを使用してカード番号、有効期限、CVCの入力要素を作成しています
-    var expiryElement = elements.create('cardExpiry')
-    var cvcElement = elements.create('cardCvc')
+    // var elements = payjp.elements()//PAY.JP Elements API を使用するための要素オブジェクトを取得
+
+    // var numberElement = elements.create('cardNumber')//create メソッドを使用してカード番号、有効期限、CVCの入力要素を作成しています
+    // var expiryElement = elements.create('cardExpiry')
+    // var cvcElement = elements.create('cardCvc')
     // それぞれの要素を numberElement, expiryElement, cvcElement として取得し、mount メソッドでそれぞれのフォーム要素 (#number-form, #expiry-form, #cvc-form) にマウントしています
-    numberElement.mount('#number-form')
-    expiryElement.mount('#expiry-form')
-    cvcElement.mount('#cvc-form')
+    // numberElement.mount('#number-form');
+    // expiryElement.mount('#expiry-form');
+    // cvcElement.mount('#cvc-form');
 
     function onSubmit(event) {//購入ボタンがクリックされた際に実行される関数
         const msgDom = document.querySelector('.card-form-alert');//.card-form-alert というクラスを持つ要素を取得し、
