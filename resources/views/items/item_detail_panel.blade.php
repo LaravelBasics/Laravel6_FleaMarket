@@ -22,7 +22,7 @@
                 <td>{{$item->secondaryCategory->primaryCategory->name}} / {{$item->secondaryCategory->name}}</td>
             </tr>
             <tr>
-                <th>商品の状態＿(　_´ω`)_ﾍﾟｼｮ</th>
+                <th>商品の状態</th>
                 <td>{{$item->condition->name}}</td>
             </tr>
         </table>

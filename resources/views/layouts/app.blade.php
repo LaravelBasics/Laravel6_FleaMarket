@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- ファビコン -->
-    <title>@yield('title') | {{ config('app.name', 'Laravel') }}('ω')</title>
+    <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
      <link rel="shortcut icon" href="{{ asset('/images/logo.ico') }}">
 
     <!-- Scripts -->

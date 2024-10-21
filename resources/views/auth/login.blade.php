@@ -8,7 +8,7 @@
 <div class="container">
     <div class="card" style="width: 500px">
         <div class="card-body">
-            <div class="font-weight-bold text-center border-bottom pb-3" style="font-size: 24px">ログイン('ω')</div>
+            <div class="font-weight-bold text-center border-bottom pb-3" style="font-size: 24px">ログイン</div>
 
             <form method="POST" action="{{ route('login') }}" class="p-5">
                 @csrf
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="mt-3">
-                    アカウントをお持ちでない方は_(:3 」∠)_<a href="{{ route('register') }}">こちら</a>
+                    アカウントをお持ちでない方は<a href="{{ route('register') }}">こちら</a>
                 </div>
                 <div class="mt-1">
                     パスワードをお忘れの方は<a href="{{ route('password.request') }}">こちら</a>

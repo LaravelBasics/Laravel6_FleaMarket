@@ -4,7 +4,7 @@
 # {{ $greeting }}
 @else
 
-{{ config('app.name') }}をご利用頂きありがとうございます。(´・ω・｀)
+{{ config('app.name') }}をご利用頂きありがとうございます。
 @endif
 
 {{-- Intro Lines --}}

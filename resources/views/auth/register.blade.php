@@ -8,7 +8,7 @@
 <div class="container">
     <div class="card" style="width: 500px">
         <div class="card-body">
-            <div class="font-weight-bold text-center border-bottom pb-3" style="font-size: 24px">会員情報登録（´-`）.｡oO</div>
+            <div class="font-weight-bold text-center border-bottom pb-3" style="font-size: 24px">会員情報登録</div>
 
             <form method="POST" action="{{ route('register') }}" class="p-5">
                 @csrf
@@ -50,7 +50,7 @@
                 </div>
 
                 <div>
-                    アカウントをお持ちの方は<a href="{{ route('login') }}">こちら(。´･ω･)?</a>
+                    アカウントをお持ちの方は<a href="{{ route('login') }}">こちら</a>
                 </div>
             </form>
         </div>

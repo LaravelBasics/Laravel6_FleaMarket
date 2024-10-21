@@ -28,19 +28,20 @@
                 <div class="col-8 offset-2">
                     <div class="card-form-alert alert alert-danger" role="alert" style="display: none"></div>
                     <div class="form-group mt-3">
-                        <label for="number-form">カード番号42*8('ω')</label>
+                        <label for="number-form">カード番号</label>
+                        <span>例:42424242</span>
                         <div id="number-form" class="form-control">
                             <!-- ここにカード番号入力フォームが生成されます -->
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <label for="expiry-form">有効期限未来の年月|ω・)</label>
+                        <label for="expiry-form">有効期限未来の年月</label>
                         <div id="expiry-form" class="form-control">
                             <!-- ここに有効期限入力フォームが生成されます -->
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <label for="expiry-form">セキュリティコード任意の3桁数字_(:3 」∠)_</label>
+                        <label for="expiry-form">セキュリティコード任意の3桁数字</label>
                         <div id="cvc-form" class="form-control">
                             <!-- ここにCVC入力フォームが生成されます -->
                         </div>
