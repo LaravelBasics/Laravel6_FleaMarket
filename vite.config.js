@@ -1,13 +1,11 @@
 import { defineConfig } from 'vite';
 import laravel from 'vite-plugin-laravel';
 
-// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         laravel({
-            // Laravelのプロジェクトルートへのパス
-            input: 'resources/js/app.js', // ここはプロジェクトのJSエントリーポイントに変更
-            refresh: true,
+            input: 'resources/js/app.js', // ここは実際の入力ファイルに合わせて変更してください
+            output: 'public/js', // 出力先のディレクトリ
         }),
     ],
 });

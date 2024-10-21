@@ -75,6 +75,11 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'schema' => 'public',
+            'options' => [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                // SNIサポートのためのオプションを追加
+                'options' => env('DB_OPTIONS', ''),
+    ],
             'sslmode' => 'prefer',
         ],
 
