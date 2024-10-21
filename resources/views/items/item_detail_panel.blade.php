@@ -7,7 +7,7 @@
     <div class="col-6">
         <table class="table table-bordered">
             <tr>
-                <th>出品者(´・ω・`)</th>
+                <th>出品者</th>
                 <td>
                     @if (!empty($item->seller->avatar_file_name))
                         <img src="{{ asset('/storage/avatars/' . $item->seller->avatar_file_name) }}" class="rounded-circle" style="object-fit: cover; width: 35px; height: 35px;">
