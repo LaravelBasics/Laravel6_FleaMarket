@@ -48039,6 +48039,8 @@ document.querySelector('.image-picker input').addEventListener('change', functio
 });
 // JavaScriptでファイル選択時にその内容を読み込み、画像を即座にプレビューする機能を実装
 
+// このコードは、Font Awesome のアイコンの読み込みと、ファイル選択時の画像プレビュー機能を実装しており、ユーザーが操作した際に直感的なUI体験を提供します
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -48121,8 +48123,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\a_laravel\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\a_laravel\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/html/test/mercari_flea_market_laravel6/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/test/mercari_flea_market_laravel6/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

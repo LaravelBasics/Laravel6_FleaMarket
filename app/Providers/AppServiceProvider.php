@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Http\View\Components\HeaderComposer;
 use Payjp\Payjp;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,5 +44,9 @@ class AppServiceProvider extends ServiceProvider
         // PayJP SDK の API キーを設定しています。config('payjp.secret_key') は、
         // Laravel の設定ファイル (config/payjp.php など) で設定された PayJP のシークレットキーを取得するための方法
         Payjp::setApiKey(config('payjp.secret_key'));
+
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
