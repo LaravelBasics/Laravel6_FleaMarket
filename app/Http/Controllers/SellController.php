@@ -86,7 +86,9 @@ class SellController extends Controller
         //   return $meta["uri"];
         $tmp_fp = tmpfile();//一時ファイルのリソースを取得
         $meta   = stream_get_meta_data($tmp_fp);//一時ファイルのメタデータを取得
-        $tempFilePath = $meta['uri'] . '.jpg';  // 取得した一時ファイルのURIに、拡張子 .jpg を追加して、一時ファイルのパスを生成
+        // $tempFilePath = $meta['uri'] . '.jpg';  // 取得した一時ファイルのURIに、拡張子 .jpg を追加して、一時ファイルのパスを生成
+        $tempFilePath = $meta['uri'];  // linuxは拡張子不要？
+
         fclose($tmp_fp);  // 一時ファイルのリソースを閉じます
 
         return $tempFilePath;
