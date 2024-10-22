@@ -38,13 +38,14 @@ class SellController extends Controller
     {
         $user = Auth::user();
 // 商品の情報と共にアップロードされた画像のファイル名（またはパス）をデータベースに保存し、その後の処理で商品の出品を完了
-        // $imageName = $this->saveImage($request->file('item-image'));
+        $imageName = $this->saveImage($request->file('item-image'));
 
         // 画像データをバイナリ形式に変換して取得
-        $imageData = $this->getImageBinaryData($request->file('item-image'));
+        $imageData = $request->getImageBinaryData();
 
         $item                        = new Item();
         $item->image_file_name       = $imageName;//image_file_name:商品の画像ファイル名（またはパス
+        $item->image_data            = $imageData; // バイナリデータを保存        
         $item->seller_id             = $user->id;//seller_id: 出品者のユーザーID ($user->id から取得)
         $item->name                  = $request->input('name');//name: 商品名（フォームからの入力
         $item->description           = $request->input('description');//description: 商品の説明（フォームからの入力）
@@ -67,6 +68,11 @@ class SellController extends Controller
      */
     private function saveImage(UploadedFile $file): string
     {
+        // 画像のバリデーション
+        if (!$file->isValid()) {
+            throw new \Exception('画像ファイルが無効です');
+        }
+
         $tempPath = $this->makeTempPath();
 
         Image::make($file)->fit(300, 300)->save($tempPath);

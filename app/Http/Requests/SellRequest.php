@@ -30,7 +30,14 @@ class SellRequest extends FormRequest
             'category'    => ['required', 'integer'],//必須であり、整数であることを指定しています
             'condition'   => ['required', 'integer'],//必須であり、整数であることを指定しています
             'price'       => ['required', 'integer', 'min:100', 'max:9999999'],//必須であり、整数であり、最小値が100、最大値が9999999であることを指定しています
+            'item-image'  => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // 画像のバリデーション
         ];
+    }
+
+    public function getImageBinaryData()
+    {
+        // アップロードされた画像をバイナリ形式で取得
+        return file_get_contents($this->file('item-image')->getRealPath());
     }
 
     public function attributes()//各項目の属性名（ラベル名）をカスタマイズしています
