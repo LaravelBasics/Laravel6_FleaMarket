@@ -2,9 +2,6 @@
     "regions": [
         "hnd1"
     ],
-    "functions": {
-    "runtime": "vercel-php@0.3.6"
-  },
   "builds": [
     {
       "src": "public/index.php",
