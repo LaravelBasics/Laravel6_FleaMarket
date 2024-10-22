@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "ext-gd": "*",
+        "fakerphp/faker": "^1.9",
         "fideloper/proxy": "^4.4",
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "^7.8",
@@ -17,7 +19,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "1.0",
         "payjp/payjp-php": "1.2.0",
-        "symfony/error-handler": "4.4.4"
+        "symfony/error-handler": "^4.4",
+        "symfony/mailer": "^5.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "3.4.2",
