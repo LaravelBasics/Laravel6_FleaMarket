@@ -38,7 +38,10 @@ class SellController extends Controller
     {
         $user = Auth::user();
 // 商品の情報と共にアップロードされた画像のファイル名（またはパス）をデータベースに保存し、その後の処理で商品の出品を完了
-        $imageName = $this->saveImage($request->file('item-image'));
+        // $imageName = $this->saveImage($request->file('item-image'));
+
+        // 画像データをバイナリ形式に変換して取得
+        $imageData = $this->getImageBinaryData($request->file('item-image'));
 
         $item                        = new Item();
         $item->image_file_name       = $imageName;//image_file_name:商品の画像ファイル名（またはパス
@@ -93,5 +96,17 @@ class SellController extends Controller
 
         return $tempFilePath;
         // 最終的に、拡張子を追加した一時ファイルのパスを返します。このメソッドは、画像のリサイズや一時的な保存のために一意のファイルパスを生成する際に使用されます
+    }
+
+    /**
+     * 画像データをバイナリ形式に変換して返します
+     *
+     * @param UploadedFile $file アップロードされた商品画像
+     * @return string バイナリデータ
+     */
+    private function getImageBinaryData(UploadedFile $file): string
+    {
+        // 画像ファイルをバイナリデータとして読み込みます
+        return file_get_contents($file->getRealPath());
     }
 }
