@@ -5,7 +5,11 @@
     "builds": [
         {
             "src": "public/index.php",
-            "use": "vercel-php@0.3.6"
+            "use": "vercel-php@0.3.6",
+            "config": {
+                "runtime": "php",
+                "extensions": ["gd"]
+            }
         },
         {
             "src": "public/**",
