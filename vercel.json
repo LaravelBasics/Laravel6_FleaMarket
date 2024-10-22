@@ -3,7 +3,7 @@
         "hnd1"
     ],
     "functions": {
-    "runtime": "vercel-php@^7.4"
+    "runtime": "vercel-php@0.3.6"
   },
   "builds": [
     {
