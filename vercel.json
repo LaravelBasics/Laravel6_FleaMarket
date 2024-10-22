@@ -5,11 +5,7 @@
     "builds": [
         {
             "src": "public/index.php",
-            "use": "vercel-php@0.3.6",
-            "config": {
-                "runtime": "php",
-                "extensions": ["gd"]
-            }
+            "use": "vercel-php@0.3.6"
         },
         {
             "src": "public/**",
@@ -53,14 +49,9 @@
         {
             "src": "/(.*)",
             "dest": "/public/index.php"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/public/$1"
-          }
+        }
     ],
     "env": {
-        "APP_URL": "https://laravel6-test-qcnvg5hur-abcdefghijkoks-projects.vercel.app",
         "APP_NAME": "Laravel Vercel",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
