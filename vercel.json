@@ -48,7 +48,7 @@
           },
         {
             "src": "/(.*)",
-            "dest": "server.php"
+            "dest": "/public/index.php"
         }
     ],
     "env": {
