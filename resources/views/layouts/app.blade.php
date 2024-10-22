@@ -43,7 +43,7 @@ if (extension_loaded('gd')) {
     echo "PNG Support: " . ($gdInfo['PNG Support'] ? 'はい' : 'いいえ') . "\n";
     echo "GIF Support: " . ($gdInfo['GIF Support'] ? 'はい' : 'いいえ') . "\n";
 } else {
-    echo "GDライブラリは有効ではありません。\n";
+    echo "GDライブラリは有効ではありません";
 }
 ?>
 
