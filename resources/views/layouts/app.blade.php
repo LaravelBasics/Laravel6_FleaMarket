@@ -33,7 +33,6 @@
             
             @yield('content')
         </main>
-        <img src="{{ asset('resized-image.jpg') }}" alt="Resized Image">
 
     </div>
 

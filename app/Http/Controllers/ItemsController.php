@@ -54,13 +54,25 @@ class ItemsController extends Controller
 
         // orderByRawメソッドを使用するとORDER BY句のSQLを直接記述することができます
         // orderByRaw... により、state カラムの値を特定の順序で並び替え
-        $items = $query->orderByRaw("FIELD(state, '" . Item::STATE_SELLING . "', '" . Item::STATE_BOUGHT . "')")
+        // MySQL用
+        // $items = $query->orderByRaw("FIELD(state, '" . Item::STATE_SELLING . "', '" . Item::STATE_BOUGHT . "')")
             
             //orderBy('id', 'DESC') により、id カラムを降順（新しい順）に並び替えています。最も新しい商品が先頭に来るようにしています。
-            ->orderBy('id', 'DESC')
-            ->paginate(9);//paginate(9) により、ページネーションを実行しています。1ページあたり9件の商品データを取得する設定
+            // ->orderBy('id', 'DESC')
+            // ->paginate(9);//paginate(9) により、ページネーションを実行しています。1ページあたり9件の商品データを取得する設定
 
-        Log::info("アイテムの取得が完了しました");
+        // Log::info("アイテムの取得が完了しました");
+
+        // PGSQL用
+            $items = $query->orderByRaw("
+            CASE state
+                WHEN '" . Item::STATE_SELLING . "' THEN 1
+                WHEN '" . Item::STATE_BOUGHT . "' THEN 2
+                ELSE 3
+                END")
+            ->orderBy('id', 'DESC')
+            ->paginate(9);
+
         return view('items.items')->with('items', $items);
         // items' というキーで $items という変数をビューに渡しています。こうすることで、
         // ビュー側で $items を利用して、コントローラで取得した商品データなどを表示することができます
