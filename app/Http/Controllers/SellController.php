@@ -38,12 +38,22 @@ class SellController extends Controller
     {
         $user = Auth::user();
 // 商品の情報と共にアップロードされた画像のファイル名（またはパス）をデータベースに保存し、その後の処理で商品の出品を完了
-        $imageName = $this->saveImage($request->file('item-image'));
+        // $imageName = $this->saveImage($request->file('item-image'));
 
         // 画像データをバイナリ形式に変換して取得
-        $imageData = $request->getImageBinaryData();
+        // $imageData = $request->getImageBinaryData();
+        // 画像のバイナリデータを取得
+        // $imageData = $this->getImageBinaryData($request->file('item-image'));
+
+        // 商品画像の保存
+    $imageName = $this->saveImage($request->file('item-image'));
+
+    // 画像データをバイナリ形式に変換して取得
+    $imageData = $this->getImageBinaryData($request->file('item-image')); // 修正点
+
 
         $item                        = new Item();
+        // 画像のバイナリデータを取得
         $item->image_file_name       = $imageName;//image_file_name:商品の画像ファイル名（またはパス
         $item->image_data            = $imageData; // バイナリデータを保存        
         $item->seller_id             = $user->id;//seller_id: 出品者のユーザーID ($user->id から取得)
@@ -112,7 +122,11 @@ class SellController extends Controller
      */
     private function getImageBinaryData(UploadedFile $file): string
     {
+        if (!$file->isValid()) {
+            throw new \Exception('無効な画像ファイルです');
+        }
         // 画像ファイルをバイナリデータとして読み込みます
-        return file_get_contents($file->getRealPath());
+        // return file_get_contents($file->getRealPath());
+        return base64_encode(file_get_contents($file->getRealPath()));
     }
 }

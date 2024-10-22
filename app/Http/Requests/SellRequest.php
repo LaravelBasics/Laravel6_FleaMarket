@@ -24,20 +24,20 @@ class SellRequest extends FormRequest
     public function rules()
     {
         return [
-            'item-image'  => ['required', 'file', 'image'],//必須であり、ファイルであること、画像ファイルであることを指定しています
+            // 'item-image'  => ['required', 'file', 'image'],//必須であり、ファイルであること、画像ファイルであることを指定しています
             'name'        => ['required', 'string', 'max:255'],//必須であり、文字列であり、最大255文字までの制限があります
             'description' => ['required', 'string', 'max:2000'],//必須であり、文字列であり、最大2000文字までの制限があります
             'category'    => ['required', 'integer'],//必須であり、整数であることを指定しています
             'condition'   => ['required', 'integer'],//必須であり、整数であることを指定しています
             'price'       => ['required', 'integer', 'min:100', 'max:9999999'],//必須であり、整数であり、最小値が100、最大値が9999999であることを指定しています
-            'item-image'  => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // 画像のバリデーション
+            'item-image'  => ['required', 'file', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // ここで画像のバリデーションをまとめます
         ];
     }
 
-    public function getImageBinaryData()
+    public function getImageBinaryData($file)
     {
         // アップロードされた画像をバイナリ形式で取得
-        return file_get_contents($this->file('item-image')->getRealPath());
+        return file_get_contents($file->getRealPath());
     }
 
     public function attributes()//各項目の属性名（ラベル名）をカスタマイズしています

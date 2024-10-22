@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Item extends Model
 {//  STATE_SELLING と STATE_BOUGHT は、商品の状態を表す定数
@@ -15,8 +14,6 @@ class Item extends Model
     protected $casts = [//データベースから取得した日時情報を直接 DateTime オブジェクトとして利用できます
         'bought_at' => 'datetime',
     ];
-
-    use HasFactory;
 
     protected $fillable = [
         'image_file_name',

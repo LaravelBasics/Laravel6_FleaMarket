@@ -1,10 +1,10 @@
-@extends('layouts.app')
 
-@section('title')
-{{$item->name}} | 商品購入
-@endsection
+
+<?php $__env->startSection('title'); ?>
+<?php echo e($item->name); ?> | 商品購入
+<?php $__env->stopSection(); ?>
 <!-- http://localhost/a_laravel/public/items/12/buy -->
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!-- 以下のコードでPAY.JPのクライアントサイド向けのライブラリを読み込む -->
 <script src="https://js.pay.jp/v2/pay.js"></script>
 <div class="container">
@@ -12,17 +12,18 @@
         <div class="col-8 offset-2 bg-white">
             <div class="row mt-3">
                 <div class="col-8 offset-2">
-                    @if (session('message'))
-                    <div class="alert alert-{{ session('type', 'success') }}" role="alert">
-                        {{ session('message') }}
+                    <?php if(session('message')): ?>
+                    <div class="alert alert-<?php echo e(session('type', 'success')); ?>" role="alert">
+                        <?php echo e(session('message')); ?>
+
                     </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 <!-- 商品パネルを再利用 -->
-            @include('items.item_detail_panel', [
+            <?php echo $__env->make('items.item_detail_panel', [
             'item' => $item
-            ])
+            ], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             <div class="row">
                 <div class="col-8 offset-2">
@@ -56,8 +57,8 @@
                 </div>
             </div>
 
-            <form id="buy-form" method="POST" action="{{route('item.buy', [$item->id])}}">
-                @csrf
+            <form id="buy-form" method="POST" action="<?php echo e(route('item.buy', [$item->id])); ?>">
+                <?php echo csrf_field(); ?>
                 <input type="hidden" id="card-token" name="card-token">
             </form>
         </div>
@@ -65,7 +66,7 @@
 </div>
 <script>
     // document.addEventListener('DOMContentLoaded', function() {
-    //     var payjp = Payjp('{{config("payjp.public_key")}}');
+    //     var payjp = Payjp('<?php echo e(config("payjp.public_key")); ?>');
     //     var elements = payjp.elements();
     //     var numberElement = elements.create('cardNumber');
     //     var expiryElement = elements.create('cardExpiry');
@@ -75,7 +76,7 @@
     //     expiryElement.mount('#expiry-form');
     //     cvcElement.mount('#cvc-form');
     // });
-    var payjp = Payjp('{{config("payjp.public_key")}}')//PAY.JPのクライアントライブラリを初期化,config("payjp.public_key") は、Laravelの設定ファイルからPAY.JPのパブリックキーを取得
+    var payjp = Payjp('<?php echo e(config("payjp.public_key")); ?>')//PAY.JPのクライアントライブラリを初期化,config("payjp.public_key") は、Laravelの設定ファイルからPAY.JPのパブリックキーを取得
 
     var elements = payjp.elements()//PAY.JP Elements API を使用するための要素オブジェクトを取得
 
@@ -106,4 +107,5 @@
         })
     }//PAY.JPを使用したクレジットカード情報の安全な処理と、それに伴うフォームの送信処理が行われています
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/test/mercari_flea_market_laravel6/resources/views/items/item_buy_form.blade.php ENDPATH**/ ?>
