@@ -1,0 +1,247 @@
+
+
+<?php $__env->startSection('title'); ?>
+商品出品
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <?php if(session('status')): ?>
+            <div class="alert alert-success" role="alert">
+                <?php echo e(session('status')); ?>
+
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8 offset-2 bg-white">
+            <div class="font-weight-bold text-center border-bottom pb-3 pt-3" style="font-size: 24px">商品を出品する</div>
+
+            <form id="sell-form" method="POST" action="<?php echo e(route('sell')); ?>" class="p-5" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+
+                
+                <div>商品画像</div>
+                <span class="item-image-form image-picker">
+                    <input type="file" name="item-image" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" onchange="resizeAndUploadImage(this.files[0])" />
+                    <label for="item-image" class="d-inline-block" role="button">
+                        <img src="<?php echo e(asset('/images/item-image-default.png')); ?>" style="object-fit: cover; width: 300px; height: 300px;">
+                    </label>
+                </span>
+                <?php $__errorArgs = ['item-image'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <div style="color: #E4342E;" role="alert">
+                    <strong><?php echo e($message); ?></strong>
+                </div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+                
+                <div class="form-group mt-3">
+                    <label for="name">商品名</label>
+                    <input id="name" type="text" class="form-control <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="name" value="<?php echo e(old('name')); ?>" required autocomplete="name" autofocus>
+                    <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($message); ?></strong>
+                    </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                
+                <div class="form-group mt-3">
+                    <label for="description">商品の説明</label>
+                    <textarea id="description" class="form-control <?php $__errorArgs = ['description'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="description" required autocomplete="description" autofocus><?php echo e(old('description')); ?></textarea>
+                    <?php $__errorArgs = ['description'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($message); ?></strong>
+                    </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                
+                <div class="form-group mt-3">
+                    <label for="category">カテゴリ</label>
+                    <select name="category" class="custom-select form-control <?php $__errorArgs = ['category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <optgroup label="<?php echo e($category->name); ?>">
+                            <?php $__currentLoopData = $category->secondaryCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $secondary): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($secondary->id); ?>" <?php echo e(old('category') == $secondary->id ? 'selected' : ''); ?>>
+                                <?php echo e($secondary->name); ?>
+
+                            </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </optgroup>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                    <?php $__errorArgs = ['category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($message); ?></strong>
+                    </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                
+                <div class="form-group mt-3">
+                    <label for="condition">商品の状態</label>
+                    <select name="condition" class="custom-select form-control <?php $__errorArgs = ['condition'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                        <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($condition->id); ?>" <?php echo e(old('condition') == $condition->id ? 'selected' : ''); ?>>
+                            <?php echo e($condition->name); ?>
+
+                        </option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                    <?php $__errorArgs = ['condition'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($message); ?></strong>
+                    </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                
+                <div class="form-group mt-3">
+                    <label for="price">販売価格</label>
+                    <input id="price" type="number" class="form-control <?php $__errorArgs = ['price'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="price" value="<?php echo e(old('price')); ?>" required autocomplete="price" autofocus>
+                    <?php $__errorArgs = ['price'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($message); ?></strong>
+                    </span>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                </div>
+
+                <div class="form-group mb-0 mt-3">
+                    <button type="submit" class="btn btn-block btn-secondary">
+                        出品する
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function resizeAndUploadImage(file) {
+        const maxWidth = 300;
+        const maxHeight = 300;
+        const reader = new FileReader();
+        
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = maxWidth;
+                canvas.height = maxHeight;
+                ctx.drawImage(img, 0, 0, maxWidth, maxHeight);
+
+                canvas.toBlob((blob) => {
+                    const formData = new FormData();
+                    formData.append('item-image', blob, 'resized-image.jpg');
+                    formData.append('name', document.getElementById('name').value);
+                    formData.append('description', document.getElementById('description').value);
+                    formData.append('category', document.getElementById('category').value);
+                    formData.append('condition', document.getElementById('condition').value);
+                    formData.append('price', document.getElementById('price').value);
+
+                    fetch('/sell-item', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'alert alert-success';
+    messageDiv.textContent = data.message;
+    document.querySelector('.container').prepend(messageDiv); // メッセージをコンテナの先頭に追加
+})
+                    .catch(error => console.error('Error:', error));
+                }, 'image/jpeg');
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/test/mercari_flea_market_laravel6/resources/views/sell.blade.php ENDPATH**/ ?>
