@@ -18,16 +18,15 @@
 
     <div class="row">
         <div class="col-8 offset-2 bg-white">
-<!-- http://localhost/a_laravel/public/sell -->
             <div class="font-weight-bold text-center border-bottom pb-3 pt-3" style="font-size: 24px">商品を出品する</div>
 
-            <form method="POST" action="{{ route('sell') }}" class="p-5" enctype="multipart/form-data">
+            <form id="sell-form" method="POST" action="{{ route('sell') }}" class="p-5" enctype="multipart/form-data">
                 @csrf
 
                 {{-- 商品画像 --}}
                 <div>商品画像</div>
                 <span class="item-image-form image-picker">
-                    <input type="file" name="item-image" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" />
+                    <input type="file" name="item-image" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" onchange="resizeAndUploadImage(this.files[0])" />
                     <label for="item-image" class="d-inline-block" role="button">
                         <img src="{{ asset('/images/item-image-default.png') }}" style="object-fit: cover; width: 300px; height: 300px;">
                     </label>
@@ -118,4 +117,49 @@
         </div>
     </div>
 </div>
+
+<script>
+    function resizeAndUploadImage(file) {
+        const maxWidth = 300;
+        const maxHeight = 300;
+        const reader = new FileReader();
+        
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = maxWidth;
+                canvas.height = maxHeight;
+                ctx.drawImage(img, 0, 0, maxWidth, maxHeight);
+
+                canvas.toBlob((blob) => {
+                    const formData = new FormData();
+                    formData.append('item-image', blob, 'resized-image.jpg');
+                    formData.append('name', document.getElementById('name').value);
+                    formData.append('description', document.getElementById('description').value);
+                    formData.append('category', document.getElementById('category').value);
+                    formData.append('condition', document.getElementById('condition').value);
+                    formData.append('price', document.getElementById('price').value);
+
+                    fetch('/sell-item', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'alert alert-success';
+    messageDiv.textContent = data.message;
+    document.querySelector('.container').prepend(messageDiv); // メッセージをコンテナの先頭に追加
+})
+                    .catch(error => console.error('Error:', error));
+                }, 'image/jpeg');
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
 @endsection
