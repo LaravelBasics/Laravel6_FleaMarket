@@ -35,34 +35,8 @@ class SellController extends Controller
     }
 
     public function sellItem(SellRequest $request)
-{
-    $user = Auth::user();
-
-    // リサイズ済みの画像を保存
-    if ($request->hasFile('item-image')) {
-        $filePath = Storage::disk('public')->putFile('item-images', $request->file('item-image'));
-    }
-
-    // 商品情報をデータベースに保存
-    $item = new Item();
-    $item->image_file_name = basename($filePath);  // ファイルパスをデータベースに保存
-    $item->seller_id = $user->id;
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->secondary_category_id = $request->input('category');
-    $item->item_condition_id = $request->input('condition');
-    $item->price = $request->input('price');
-    $item->state = Item::STATE_SELLING;
-    $item->save();
-
-    // return response()->json(['message' => '商品を出品しました。']);
-    // 出品後に出品画面にリダイレクト
-    return redirect()->route('sell')->with('status', '商品を出品しました。');
-}
-
-    // public function sellItem(SellRequest $request)
-    // {
-    //     $user = Auth::user();
+    {
+        $user = Auth::user();
 // 商品の情報と共にアップロードされた画像のファイル名（またはパス）をデータベースに保存し、その後の処理で商品の出品を完了
         // $imageName = $this->saveImage($request->file('item-image'));
 
@@ -72,29 +46,29 @@ class SellController extends Controller
         // $imageData = $this->getImageBinaryData($request->file('item-image'));
 
         // 商品画像の保存
-    // $imageName = $this->saveImage($request->file('item-image'));
+    $imageName = $this->saveImage($request->file('item-image'));
 
     // 画像データをバイナリ形式に変換して取得
-    // $imageData = $this->getImageBinaryData($request->file('item-image')); // 修正点
+    $imageData = $this->getImageBinaryData($request->file('item-image')); // 修正点
 
 
-        // $item                        = new Item();
+        $item                        = new Item();
         // 画像のバイナリデータを取得
-        // $item->image_file_name       = $imageName;//image_file_name:商品の画像ファイル名（またはパス
-        // $item->image_data            = $imageData; // バイナリデータを保存        
-        // $item->seller_id             = $user->id;//seller_id: 出品者のユーザーID ($user->id から取得)
-        // $item->name                  = $request->input('name');//name: 商品名（フォームからの入力
-        // $item->description           = $request->input('description');//description: 商品の説明（フォームからの入力）
-        // $item->secondary_category_id = $request->input('category');//secondary_category_id: 商品のセカンダリカテゴリID（フォームからの入力）
-        // $item->item_condition_id     = $request->input('condition');//item_condition_id: 商品のコンディションID（フォームからの入力）
-        // $item->price                 = $request->input('price');//price: 商品の価格（フォームからの入力）
-        // $item->state                 = Item::STATE_SELLING;//state: 商品の状態を表す定数 Item::STATE_SELLING（出品中を示す定数）
-        // $item->save();
+        $item->image_file_name       = $imageName;//image_file_name:商品の画像ファイル名（またはパス
+        $item->image_data            = $imageData; // バイナリデータを保存        
+        $item->seller_id             = $user->id;//seller_id: 出品者のユーザーID ($user->id から取得)
+        $item->name                  = $request->input('name');//name: 商品名（フォームからの入力
+        $item->description           = $request->input('description');//description: 商品の説明（フォームからの入力）
+        $item->secondary_category_id = $request->input('category');//secondary_category_id: 商品のセカンダリカテゴリID（フォームからの入力）
+        $item->item_condition_id     = $request->input('condition');//item_condition_id: 商品のコンディションID（フォームからの入力）
+        $item->price                 = $request->input('price');//price: 商品の価格（フォームからの入力）
+        $item->state                 = Item::STATE_SELLING;//state: 商品の状態を表す定数 Item::STATE_SELLING（出品中を示す定数）
+        $item->save();
 
-        // return redirect()->back()//ユーザーが直前にいたページにリダイレクト
-        //     ->with('status', '商品を出品しました。');
+        return redirect()->back()//ユーザーが直前にいたページにリダイレクト
+            ->with('status', '商品を出品しました。');
             //リダイレクト先のビューで使用できるように、セッションに 'status' キーで '商品を出品しました。' というメッセージを保存します
-    // }
+    }
 
     /**
      * 商品画像をリサイズして保存します
