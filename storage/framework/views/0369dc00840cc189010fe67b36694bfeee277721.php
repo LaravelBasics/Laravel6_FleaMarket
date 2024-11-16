@@ -7,6 +7,8 @@
 <?php $__env->startSection('content'); ?>
 <div class="container">
     <div class="row">
+         <!-- test0.jpg を表示 -->
+    <img src="<?php echo e(asset('images/test0.jpg')); ?>" alt="Test Image">
         <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="col-3 mb-3">
             <div class="card">

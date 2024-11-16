@@ -7,6 +7,8 @@
 @section('content')
 <div class="container">
     <div class="row">
+         <!-- test0.jpg を表示 -->
+    <img src="{{ asset('images/test0.jpg') }}" alt="Test Image">
         @foreach ($items as $item)
         <div class="col-3 mb-3">
             <div class="card">
