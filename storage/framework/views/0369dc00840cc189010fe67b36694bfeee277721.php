@@ -6,14 +6,12 @@
 <!-- http://localhost/a_laravel/public/ -->
 <?php $__env->startSection('content'); ?>
 <div class="container">
-    <div class="row">
-         <!-- test0.jpg を表示 -->
-    <img src="<?php echo e(asset('images/test0.jpg')); ?>" alt="Test Image">
+<div class="row">
         <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="col-3 mb-3">
             <div class="card">
                 <div class="position-relative overflow-hidden">
-                    <img class="card-img-top" src="<?php echo e(asset('/storage/item-images/' . $item->image_file_name)); ?>">
+                    <img class="card-img-top" src="<?php echo e(asset('/images/' . $item->image_file_name)); ?>" alt="<?php echo e($item->name); ?>">
 
                     <div class="position-absolute py-2 px-3" style="left: 0; bottom: 20px; color: white; background-color: rgba(0, 0, 0, 0.70)">
                         <i class="fas fa-yen-sign"></i>

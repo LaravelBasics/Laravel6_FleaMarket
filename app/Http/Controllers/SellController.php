@@ -35,40 +35,39 @@ class SellController extends Controller
     }
 
     public function sellItem(SellRequest $request)
-    {
-        $user = Auth::user();
-// 商品の情報と共にアップロードされた画像のファイル名（またはパス）をデータベースに保存し、その後の処理で商品の出品を完了
-        // $imageName = $this->saveImage($request->file('item-image'));
+{
+    $user = Auth::user();
+    
+    // フォームで選択された画像名を取得（アップロードがない場合）
+    $imageName = $request->input('selected-image', 'test0.jpg'); // デフォルトは'test0.jpg'
 
-        // 画像データをバイナリ形式に変換して取得
-        // $imageData = $request->getImageBinaryData();
-        // 画像のバイナリデータを取得
-        // $imageData = $this->getImageBinaryData($request->file('item-image'));
-
-        // 商品画像の保存
-    $imageName = $this->saveImage($request->file('item-image'));
-
-    // 画像データをバイナリ形式に変換して取得
-    $imageData = $this->getImageBinaryData($request->file('item-image')); // 修正点
-
-
-        $item                        = new Item();
-        // 画像のバイナリデータを取得
-        $item->image_file_name       = $imageName;//image_file_name:商品の画像ファイル名（またはパス
-        $item->image_data            = $imageData; // バイナリデータを保存        
-        $item->seller_id             = $user->id;//seller_id: 出品者のユーザーID ($user->id から取得)
-        $item->name                  = $request->input('name');//name: 商品名（フォームからの入力
-        $item->description           = $request->input('description');//description: 商品の説明（フォームからの入力）
-        $item->secondary_category_id = $request->input('category');//secondary_category_id: 商品のセカンダリカテゴリID（フォームからの入力）
-        $item->item_condition_id     = $request->input('condition');//item_condition_id: 商品のコンディションID（フォームからの入力）
-        $item->price                 = $request->input('price');//price: 商品の価格（フォームからの入力）
-        $item->state                 = Item::STATE_SELLING;//state: 商品の状態を表す定数 Item::STATE_SELLING（出品中を示す定数）
-        $item->save();
-
-        return redirect()->back()//ユーザーが直前にいたページにリダイレクト
-            ->with('status', '商品を出品しました。');
-            //リダイレクト先のビューで使用できるように、セッションに 'status' キーで '商品を出品しました。' というメッセージを保存します
+    // アップロードされた画像が存在し、有効であれば処理
+    if ($request->hasFile('item-image') && $request->file('item-image')->isValid()) {
+        $imageName = $this->saveImage($request->file('item-image'));
     }
+
+    // 画像データを取得
+    $imageFile = $request->file('item-image') ?? new \Illuminate\Http\File(public_path('images/' . $imageName));
+    $imageData = $this->getImageBinaryData($imageFile);
+
+    // 商品情報の保存
+    $item = new Item();
+    $item->image_file_name = $imageName;
+    $item->image_data = $imageData;
+    $item->seller_id = $user->id;
+    $item->name = $request->input('name');
+    $item->description = $request->input('description');
+    $item->secondary_category_id = $request->input('category');
+    $item->item_condition_id = $request->input('condition');
+    $item->price = $request->input('price');
+    $item->state = Item::STATE_SELLING;
+    $item->save();
+
+    return redirect()->back()
+        ->with('status', '商品を出品しました。');
+}
+
+    
 
     /**
      * 商品画像をリサイズして保存します
@@ -120,13 +119,16 @@ class SellController extends Controller
      * @param UploadedFile $file アップロードされた商品画像
      * @return string バイナリデータ
      */
-    private function getImageBinaryData(UploadedFile $file): string
-    {
-        if (!$file->isValid()) {
-            throw new \Exception('無効な画像ファイルです');
-        }
-        // 画像ファイルをバイナリデータとして読み込みます
-        // return file_get_contents($file->getRealPath());
+    private function getImageBinaryData($file): string
+{
+    // $fileがnullでない場合
+    if ($file instanceof UploadedFile && $file->isValid()) {
         return base64_encode(file_get_contents($file->getRealPath()));
+    } else {
+        // 画像が選ばれていない場合は、public/images/test0.jpgを使用
+        return base64_encode(file_get_contents(public_path('images/test0.jpg')));
     }
+}
+
+
 }

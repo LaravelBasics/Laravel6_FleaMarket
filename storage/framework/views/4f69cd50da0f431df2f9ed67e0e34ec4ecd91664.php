@@ -46,6 +46,7 @@
 
     <!-- Scripts -->
     <script src="<?php echo e(asset('js/app.js')); ?>" defer></script>
+    <?php echo $__env->yieldContent('script'); ?>
 </body>
 </html>
 <?php /**PATH /var/www/html/test/mercari_flea_market_laravel6/resources/views/layouts/app.blade.php ENDPATH**/ ?>
