@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <style>
-        /* ローディング画面のスタイル */
+        /* ローディング画面 */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -32,28 +32,33 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            color: white;
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            z-index: 9999; /* 最前面に表示 */
+            align-items: center;
+            z-index: 9999;
         }
 
-        @keyframes  rotate {
+        /* リングのスタイル */
+        .spinner {
+            border: 8px solid #f3f3f3; /* 薄い色 */
+            border-top: 8px solid #3498db; /* トップ部分の色 */
+            border-radius: 50%; /* 円形にする */
+            width: 50px; /* リングのサイズ */
+            height: 50px;
+            animation: spin 1s linear infinite; /* アニメーションの設定 */
+        }
+
+        /* 回転のアニメーション */
+        @keyframes  spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        #loading-screen p {
-            animation: rotate 2s linear infinite;
         }
     </style>
 </head>
 <body>
     <!-- ローディング画面 -->
     <div id="loading-screen">
-        <p>ロード中...</p>
+        <div class="spinner"></div> <!-- 回転するリング -->
     </div>
     <div id="app">
         
