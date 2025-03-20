@@ -18,7 +18,6 @@
 
     <div class="row">
         <div class="col-8 offset-2 bg-white">
-<!-- http://localhost/a_laravel/public/sell -->
             <div class="font-weight-bold text-center border-bottom pb-3 pt-3" style="font-size: 24px">商品を出品する</div>
 
             <form method="POST" action="{{ route('sell') }}" class="p-5" enctype="multipart/form-data">
@@ -27,11 +26,15 @@
                 {{-- 商品画像 --}}
                 <div>商品画像</div>
                 <span class="item-image-form image-picker">
-                    <input type="file" name="item-image" class="d-none" accept="image/png,image/jpeg,image/gif" id="item-image" />
-                    <label for="item-image" class="d-inline-block" role="button">
-                        <img src="{{ asset('/images/item-image-default.png') }}" style="object-fit: cover; width: 300px; height: 300px;">
+                    <!-- ファイル選択用の input は削除 -->
+                    <label for="item-image" class="d-inline-block" role="button" id="image-label">
+                        <img id="preview-image" src="{{ asset('images/test0.jpg') }}" style="object-fit: cover; width: 300px; height: 300px;">
                     </label>
                 </span>
+
+                <!-- 隠しフィールドに選択された画像名をセット -->
+                <input type="hidden" name="selected-image" id="selected-image" value="test0.jpg">  <!-- 追加 -->
+
                 @error('item-image')
                 <div style="color: #E4342E;" role="alert">
                     <strong>{{ $message }}</strong>
@@ -67,9 +70,7 @@
                         @foreach ($categories as $category)
                         <optgroup label="{{$category->name}}">
                             @foreach($category->secondaryCategories as $secondary)
-                            <option value="{{$secondary->id}}" {{old('category') == $secondary->id ? 'selected' : ''}}>
-                                {{$secondary->name}}
-                            </option>
+                            <option value="{{$secondary->id}}" {{old('category') == $secondary->id ? 'selected' : ''}}>{{ $secondary->name }}</option>
                             @endforeach
                         </optgroup>
                         @endforeach
@@ -86,9 +87,7 @@
                     <label for="condition">商品の状態</label>
                     <select name="condition" class="custom-select form-control @error('condition') is-invalid @enderror">
                         @foreach ($conditions as $condition)
-                        <option value="{{$condition->id}}" {{old('condition') == $condition->id ? 'selected' : ''}}>
-                            {{$condition->name}}
-                        </option>
+                        <option value="{{$condition->id}}" {{old('condition') == $condition->id ? 'selected' : ''}}>{{ $condition->name }}</option>
                         @endforeach
                     </select>
                     @error('condition')
@@ -118,4 +117,25 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    let imageCounter = 0; // カウンタの初期化
+
+    // 画像選択の処理
+    document.getElementById('image-label').addEventListener('click', function() {
+        // 画像を切り替える
+        const imageNames = ['test0.jpg', 'test1.jpg', 'test2.jpg', 'test3.jpg'];
+        
+        // カウンタで次の画像を選択
+        imageCounter = (imageCounter + 1) % imageNames.length;
+
+        // 選択した画像のsrcを更新
+        document.getElementById('preview-image').src = "{{ asset('images/') }}/" + imageNames[imageCounter];
+
+        // 隠しフィールドに選択した画像の名前を設定
+        document.getElementById('selected-image').value = imageNames[imageCounter];
+    });
+</script>
 @endsection

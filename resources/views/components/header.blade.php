@@ -1,27 +1,23 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <!-- app.blade.phpのインクルードで呼び出し -->
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('/images/logo-1.png') }}" style="height: 39px;" alt="Melpit">
+            <img src="{{ asset('images/logo-1.png') }}" style="height: 39px;" alt="Melpit">
         </a>
-        <!-- 6-3ヘッダーに検索フォームを作ろう Bootstrap を使用してナビゲーションバーのトグルボタンを作成-->
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-
                 <form class="form-inline" method="GET" action="{{ route('top') }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <select class="custom-select" name="category">
                                 <option value="">全て</option>
                                 @foreach ($categories as $category)
-
                                 <option value="primary:{{$category->id}}" class="font-weight-bold" {{ $defaults['category'] == "primary:" . $category->id ? 'selected' : ''}}>{{$category->name}}</option>
                                 @foreach ($category->secondaryCategories as $secondary)
-
                                 <option value="secondary:{{$secondary->id}}" {{ $defaults['category'] == "secondary:" . $secondary->id ? 'selected' : ''}}> {{$secondary->name}}</option>
                                 @endforeach
                                 @endforeach
@@ -36,7 +32,6 @@
                         </div>
                     </div>
                 </form>
-                <!-- 4-4ヘッダー部分を作ろう -->
 
                 @guest
                 {{-- 非ログイン --}}
@@ -52,9 +47,9 @@
                     {{-- ログイン情報 --}}
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         @if (!empty($user->avatar_file_name))
-                        <img src="{{ asset('/storage/avatars/' . $user->avatar_file_name) }}" class="rounded-circle" style="object-fit: cover; width: 35px; height: 35px;">
+                        <img src="{{ asset('images/' . $user->avatar_file_name) }}" class="rounded-circle" style="object-fit: cover; width: 35px; height: 35px;">
                         @else
-                        <img src="{{ asset('/images/avatar-default.svg') }}" class="rounded-circle" style="object-fit: cover; width: 35px; height: 35px;">
+                        <img src="{{ asset('images/avatar-default.svg') }}" class="rounded-circle" style="object-fit: cover; width: 35px; height: 35px;">
                         @endif
                         {{ $user->name }} <span class="caret"></span>
                     </a>
@@ -78,7 +73,6 @@
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-
 
                         <a class="dropdown-item" href="{{ route('sell') }}">
                             <i class="fas fa-camera text-left" style="width: 30px"></i>商品を出品する

@@ -30,15 +30,16 @@ class SellRequest extends FormRequest
             'category'    => ['required', 'integer'],//必須であり、整数であることを指定しています
             'condition'   => ['required', 'integer'],//必須であり、整数であることを指定しています
             'price'       => ['required', 'integer', 'min:100', 'max:9999999'],//必須であり、整数であり、最小値が100、最大値が9999999であることを指定しています
-            'item-image'  => ['required', 'file', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // ここで画像のバリデーションをまとめます
+            // 'item-image'  => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // ここで画像のバリデーションをまとめます
+            'item-image' => ['nullable', 'string', 'in:test0.jpg,test1.jpg,test2.jpg,test3.jpg'],
         ];
     }
 
-    public function getImageBinaryData($file)
-    {
-        // アップロードされた画像をバイナリ形式で取得
-        return file_get_contents($file->getRealPath());
-    }
+    // public function getImageBinaryData($file)
+    // {
+    //     // アップロードされた画像をバイナリ形式で取得
+    //     return file_get_contents($file->getRealPath());
+    // }
 
     public function attributes()//各項目の属性名（ラベル名）をカスタマイズしています
     {//バリデーションエラーが発生した際に、そのエラーの内容をユーザーにわかりやすく表示するために使われます

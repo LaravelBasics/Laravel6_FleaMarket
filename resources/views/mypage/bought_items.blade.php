@@ -15,7 +15,8 @@
                 @foreach ($items as $item)
                     <div class="d-flex mt-3 border position-relative">
                         <div>
-                            <img src="{{ asset('/storage/item-images/'. $item->image_file_name)}}" class="img-fluid" style="height: 140px;">
+                            <!-- imagesディレクトリから購入した商品画像を表示 -->
+                            <img src="{{ asset('images/'.$item->image_file_name) }}" class="img-fluid" style="height: 140px;">
                         </div>
                         <div class="flex-fill p-3">
                             <div>
